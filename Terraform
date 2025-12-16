@@ -1,0 +1,45 @@
+Main -->
+
+provider "azurerm" {
+  features {}
+  subscription_id = "86865e4d-cdd3-4d75-9b71-554682499223"
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
+}
+
+resource "azurerm_storage_account" "storage" {
+  name                     = var.storage_account_name
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+-------------------------------------------------------
+
+Variable -->
+
+variable "resource_group_name" {
+  type = string
+}
+
+variable "location" {
+  type    = string
+  default = "eastus"
+}
+
+variable "storage_account_name" {
+  type = string
+}
+
+-------------------------
+
+tfvars -->
+
+resource_group_name  = "rg-tf-storage"
+storage_account_name = "storagetfdouglas001"
+
+
